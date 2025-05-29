@@ -18,7 +18,8 @@ export default function Home() {
       setNotes([{
         id: Date.now(),
         content: 'Write your note here...',
-        isEdited: false
+        isEdited: false,
+        color: 'bg-yellow-100'
       }]);
     }
   }, []);
@@ -37,7 +38,8 @@ export default function Home() {
     const newNote = {
       id: Date.now(),
       content: 'Write your note here...',
-      isEdited: false
+      isEdited: false,
+      color: 'bg-yellow-100'
     };
     setNotes([...notes, newNote]);
   };
@@ -65,6 +67,12 @@ export default function Home() {
     }));
   };
 
+  const changeNoteColor = (id: number, color: string) => {
+    setNotes(notes.map(note =>
+      note.id === id ? { ...note, color } : note
+    ));
+  };
+
   // Calculate statistics
   const totalNotes = notes.length;
   const editedNotes = notes.filter(note => note.isEdited).length;
@@ -86,6 +94,7 @@ export default function Home() {
               note={note}
               onSave={saveNote}
               onDelete={deleteNote}
+              onColorChange={changeNoteColor}
             />
           ))}
         </div>

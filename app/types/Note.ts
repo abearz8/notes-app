@@ -3,4 +3,5 @@ export interface Note {
   content: string;
   lastSaved?: string;
   isEdited: boolean;
+  color: string;
 } 
