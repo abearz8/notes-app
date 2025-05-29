@@ -19,7 +19,7 @@ export default function Home() {
         id: Date.now(),
         content: 'Write your note here...',
         isEdited: false,
-        color: 'bg-yellow-100'
+        color: 'bg-white/90'
       }]);
     }
   }, []);
@@ -39,7 +39,7 @@ export default function Home() {
       id: Date.now(),
       content: 'Write your note here...',
       isEdited: false,
-      color: 'bg-yellow-100'
+      color: 'bg-white/90'
     };
     setNotes([...notes, newNote]);
   };

@@ -9,6 +9,7 @@ interface NoteProps {
 }
 
 const COLORS = [
+  { name: 'White', value: 'bg-white/90' },
   { name: 'Yellow', value: 'bg-yellow-100' },
   { name: 'Blue', value: 'bg-blue-100' },
   { name: 'Green', value: 'bg-green-100' },
