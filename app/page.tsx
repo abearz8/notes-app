@@ -1,16 +1,12 @@
 'use client';
 
 import { useState, useEffect } from "react";
-
-interface Note {
-  id: number;
-  content: string;
-  lastSaved?: string;
-  isEdited: boolean;
-}
+import Note from './components/Note';
+import InfoBar from './components/InfoBar';
+import { Note as NoteType } from './types/Note';
 
 export default function Home() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<NoteType[]>([]);
 
   // Load notes from localStorage when the component mounts
   useEffect(() => {
@@ -69,35 +65,28 @@ export default function Home() {
     }));
   };
 
+  // Calculate statistics
+  const totalNotes = notes.length;
+  const editedNotes = notes.filter(note => note.isEdited).length;
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center w-full max-w-4xl">
-        <h1 className="text-4xl font-bold">Notes Demo</h1>
+        <h1 className="text-4xl font-bold text-white mb-2">Notes Demo</h1>
+        
+        <InfoBar
+          totalNotes={totalNotes}
+          editedNotes={editedNotes}
+        />
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
           {notes.map((note) => (
-            <div
+            <Note
               key={note.id}
-              className="bg-yellow-100 p-4 rounded-lg shadow-md min-h-[150px] flex flex-col relative group"
-            >
-              <textarea
-                className="flex-1 bg-transparent resize-none focus:outline-none mb-6"
-                value={note.content}
-                onChange={(e) => saveNote(note.id, e.target.value)}
-                placeholder="Write your note here..."
-              />
-              <div className="absolute bottom-2 left-4 right-4 flex justify-between items-center text-sm text-gray-500">
-                <span className="text-xs">
-                  {note.lastSaved ? `Saved at ${note.lastSaved}` : 'Not saved yet'}
-                </span>
-                <button
-                  onClick={() => deleteNote(note.id)}
-                  className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-700"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+              note={note}
+              onSave={saveNote}
+              onDelete={deleteNote}
+            />
           ))}
         </div>
 
