@@ -69,7 +69,14 @@ export default function Home() {
 
   const changeNoteColor = (id: number, color: string) => {
     setNotes(notes.map(note =>
-      note.id === id ? { ...note, color } : note
+      note.id === id
+        ? {
+            ...note,
+            color,
+            isEdited: true,
+            lastSaved: new Date().toLocaleTimeString(),
+          }
+        : note
     ));
   };
 
